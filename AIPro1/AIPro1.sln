@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIPro1", "AIPro1.csproj", "{1865E689-AFBE-4304-B6EA-FCAC96853DC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MastersOfPotsDeGeimWorld", "..\..\MastersOfPotsDeGeim\MastersOfPotsDeGeimWorld\MastersOfPotsDeGeimWorld.csproj", "{4243F66E-48A4-4738-8800-B1FC2FBDE715}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1865E689-AFBE-4304-B6EA-FCAC96853DC3}.Debug|x86.ActiveCfg = Debug|x86
+		{1865E689-AFBE-4304-B6EA-FCAC96853DC3}.Debug|x86.Build.0 = Debug|x86
+		{1865E689-AFBE-4304-B6EA-FCAC96853DC3}.Release|x86.ActiveCfg = Release|x86
+		{1865E689-AFBE-4304-B6EA-FCAC96853DC3}.Release|x86.Build.0 = Release|x86
+		{4243F66E-48A4-4738-8800-B1FC2FBDE715}.Debug|x86.ActiveCfg = Debug|x86
+		{4243F66E-48A4-4738-8800-B1FC2FBDE715}.Debug|x86.Build.0 = Debug|x86
+		{4243F66E-48A4-4738-8800-B1FC2FBDE715}.Release|x86.ActiveCfg = Release|x86
+		{4243F66E-48A4-4738-8800-B1FC2FBDE715}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
