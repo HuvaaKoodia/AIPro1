@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIEntity.cs" />
+    <Compile Include="AI\AIEntity.cs" />
     <Compile Include="AI\AI.cs" />
     <Compile Include="AI\AI_BB.cs" />
     <Compile Include="AI\AI_team.cs" />

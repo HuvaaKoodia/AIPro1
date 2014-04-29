@@ -6,19 +6,10 @@ using MastersOfPotsDeGeimWorld;
 
 namespace AIpro_FSM.AI
 {
-    public class EatFood: State{
-        public override void Update(AI ai)
-        {
-            Console.WriteLine("EATING FOOD.");
-        }
-    }
-
     public class FindFood : State
     {
         public override void Update(AI ai)
         {
-
-
             if (ai.MasterEntity.EatTarget == null)
             {
                 Console.WriteLine("LOOKING FOR FOOD.");
@@ -39,7 +30,7 @@ namespace AIpro_FSM.AI
                     ai.MasterEntity.SetEatTarget(food_target);
                     Console.WriteLine("set food target");
                 }
-                else if (ai.MasterEntity.MoveTarget == null || ai.MasterEntity.MoveTarget.IsType(Tile.Type.food))
+                else if (ai.MasterEntity.MoveTarget == null || !ai.MasterEntity.MoveTarget.IsType(Tile.Type.food))
                 {
                     //find closest food tile, move to that
                     Tile closest = null;
@@ -59,10 +50,11 @@ namespace AIpro_FSM.AI
                             }
                         }
                     }
-                    ai.MasterEntity.SetMoveTarget(closest);
+                    if (closest!=null) ai.MasterEntity.SetMoveTarget(closest);
                 }
             }
-            else {
+            else
+            {
                 Console.WriteLine("Eating FOOD.");
             }
         }
@@ -115,6 +107,60 @@ namespace AIpro_FSM.AI
         public override void Update(AI ai)
         {
             Console.WriteLine("Attacking.");
+        }
+    }
+
+    public class Mine : State
+    {
+        public override void Update(AI ai)
+        {
+            if (ai.MasterEntity.DigTarget == null)
+            {
+                Console.WriteLine("LOOKING FOR DIAMONDS.");
+                //dig if next to diamonds
+                int x = ai.MasterEntity.X, y = ai.MasterEntity.Y;
+                Tile target = null;
+                foreach (var s in PathFinder.surrounding)
+                {
+                    var tile = ai.world.GetTile(x + s.Point.X, y + s.Point.Y);
+                    if (tile.IsType(Tile.Type.diamond))
+                    {
+                        target = tile;
+                    }
+                }
+
+                if (target != null)
+                {
+                    ai.MasterEntity.SetDigTarget(target);
+                }
+                else if (ai.MasterEntity.MoveTarget == null||!ai.MasterEntity.MoveTarget.IsType(Tile.Type.diamond))
+                {
+                    //find closest tile, move to that
+                    Tile closest = null;
+                    int distance = 100000;
+
+                    foreach (var t in ai.world.map_tiles)
+                    {
+                        if (t.TileType == Tile.Type.diamond)
+                        {
+                            {
+                                var d = (t.X - x) * (t.X - x) + (t.Y - y) * (t.Y - y);
+                                if (d < distance)
+                                {
+                                    distance = d;
+                                    closest = t;
+                                }
+                            }
+                        }
+                    }
+
+                    if (closest!=null) ai.MasterEntity.SetMoveTarget(closest);
+                }
+            }
+            if (ai.MasterEntity.DigTarget != null)
+            {
+                Console.WriteLine("Mining DIAMONDS!!.");
+            }
         }
     }
 }

@@ -8,11 +8,11 @@ namespace AIpro_FSM.AI
 {
     public class AIEntity : Entity
     {
-        public AI ai { get; private set; }
+        public AI ai { get; private set;}
         Random r = new Random();
 
         //game object data
-        public bool Hungry { get { return energy < 20; } }
+        public bool Hungry { get { return energy < 20; } }//DEV. todo update hunger limit based on distance to food?
 
         public bool DEAD = false;
         public bool SenseDanger = false, UnderAttack = false;
@@ -21,7 +21,7 @@ namespace AIpro_FSM.AI
         public bool OnTheMove = false;
         public SearchNode Path;
 
-        public int CommandType = 1;
+        public int CommandType = 4;
 
         public Tile MoveTarget{ get;private set; }
         public Tile EatTarget { get; private set; }
@@ -34,22 +34,38 @@ namespace AIpro_FSM.AI
            ai.MasterEntity = this;
            ai.world = mapref;
         }
-        
         public override void Update()
         {
             UpdateBB();
 
             ai.UpdateAI();
 
-            if (EatTarget != null) {
-                EatFrom(EatTarget);
+            if (EatTarget != null)
+            {
+                if (EatTarget.Amount == 0)
+                {
+                    EatTarget = null;
+                }
+                else
+                    EatFrom(EatTarget);
             }
-            else if (DigTarget != null) {
-                DigFrom(DigTarget);
+            else if (DigTarget != null)
+            {
+                if (DigTarget.Amount == 0)
+                {
+                    DigTarget = null;
+                }
+                else
+                    DigFrom(DigTarget);
             }
             else if (MoveTarget != null)
             {
-                if (X == Path.position.X && Y == Path.position.Y)
+                if (Path == null || X == MoveTarget.X && Y == MoveTarget.Y)
+                {
+                    //destination reached
+                    MoveTarget = null;
+                }
+                else if (X == Path.position.X && Y == Path.position.Y)
                 {
                     Path = Path.next;
                 }
@@ -58,9 +74,10 @@ namespace AIpro_FSM.AI
                     var next = MapReference.GetTile(Path.position.X, Path.position.Y);
                     if (next.IsType(Tile.Type.empty))
                     {
-                        SetPosition(Path.position.X, Path.position.Y);
+                        MoveToPos(Path.position.X, Path.position.Y);
                     }
-                    else {
+                    else
+                    {
                         Path = null;
                     }
                 }
@@ -98,6 +115,14 @@ namespace AIpro_FSM.AI
             clearTargets();
 
             DigTarget = target;
+        }
+
+        public override void GetInput(string input)
+        {
+            if (input.StartsWith("1")) CommandType = 1;
+            if (input.StartsWith("2")) CommandType = 2;
+            if (input.StartsWith("3")) CommandType = 3;
+            if (input.StartsWith("4")) CommandType = 4;
         }
     }
 }
