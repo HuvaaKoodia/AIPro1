@@ -99,9 +99,8 @@ public static class PathFinder
         if (position == start || position == end) return true;
 		var nextTile = GetTile(map,position);
 		if (nextTile==null) return false;
-        
-		if (!nextTile.IsEmpty()) return false;
-		return true;
+
+		return nextTile.CanMoveTo();
     }
 
     private static Tile GetTile(Map map,Point3D pos){

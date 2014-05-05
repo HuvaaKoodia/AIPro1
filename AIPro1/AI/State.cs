@@ -37,9 +37,9 @@ namespace AIpro_FSM.AI
             Update(ai); 
         }
 
-        public virtual void Update(AI ai){
-            
-        }
+        public virtual void Start(AI ai) {}
+        public virtual void Update(AI ai){}
+        public virtual void End(AI ai) {}
 
         public void SetPriority(int priority)
         {

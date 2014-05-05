@@ -8,7 +8,7 @@ namespace AIpro_FSM.AI
 {
     public class G_BB:Blackboard
     {
-        public TileInfo[,] Tiles;
+        //public TileInfo[,] Tiles;
         public AreaInfo[,] Areas;
         AI_team team;
 
@@ -68,20 +68,41 @@ namespace AIpro_FSM.AI
                 area.CalculateIntraHeurastics();
             }
 
-            //calculate inter heurastics and make decisions
+            //calculate inter heurastics
 
             foreach (var area in Areas)
             {
                 area.CalculateInterHeurastics(Areas);
 
-                //our territory
                 if (area.amount_of_allies > area.amount_of_enemies)
                 {
-                    area.min_defenders = Math.Max(area.amount_of_enemies, area.value_heurastic / 4);
+                    //our territory
+                    area.min_defenders = Math.Max(area.amount_of_enemies, Math.Min(area.amount_of_enemies*2,area.value_heurastic / 4));
                     area.troop_offset = area.amount_of_allies-area.min_defenders;
                 }
                 else{
+                    //their territory
                     area.min_attackers =(int)(area.amount_of_enemies * 1.5f);
+                    area.troop_offset = area.amount_of_allies - area.amount_of_enemies;
+                }
+            }
+
+            //make decisions
+
+            foreach (var area in Areas)
+            {
+                area.CalculateInterHeurastics(Areas);
+
+                if (area.amount_of_allies > area.amount_of_enemies)
+                {
+                    //our territory
+                    area.min_defenders = Math.Max(area.amount_of_enemies, Math.Min(area.amount_of_enemies * 2, area.value_heurastic / 4));
+                    area.troop_offset = area.amount_of_allies - area.min_defenders;
+                }
+                else
+                {
+                    //their territory
+                    area.min_attackers = (int)(area.amount_of_enemies * 1.5f);
                     area.troop_offset = area.amount_of_allies - area.amount_of_enemies;
                 }
             }
@@ -133,8 +154,10 @@ namespace AIpro_FSM.AI
         }
     }
 
+    /*
     public class TileInfo {
 
         public int danger_level;
     }
+    */
 }

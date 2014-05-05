@@ -12,7 +12,7 @@ namespace AIpro_FSM.AI
 
         Map map;
 
-        public AI_team(Map map):base("TeamTurbo",1,ConsoleColor.DarkRed){
+        public AI_team(string name,ConsoleColor color,Map map):base(name,1,color){
             Commander = new G_BB(map,this,1);
             this.map = map;
         }
@@ -20,7 +20,6 @@ namespace AIpro_FSM.AI
         public AIEntity AddUnit(int x,int y) {
             var unit = new AIEntity(map, this);
             unit.SetPosition(x, y);
-            map.GameEntities.Add(unit);
             return unit;
         }
     }

@@ -8,6 +8,15 @@ namespace AIpro_FSM.AI
 {
     public class FindFood : State
     {
+        public override void Start(AI ai)
+        {
+        }
+
+        public override void End(AI ai)
+        {
+            ai.MasterEntity.clearTargets();
+        }
+
         public override void Update(AI ai)
         {
             if (ai.MasterEntity.EatTarget == null)
@@ -96,9 +105,30 @@ namespace AIpro_FSM.AI
 
     public class Clone : State
     {
+        public override void Start(AI ai)
+        {
+        }
+
+        public override void End(AI ai)
+        {
+            ai.MasterEntity.ForceLookForFood = false;
+            ai.MasterEntity.clearTargets();
+        }
+
         public override void Update(AI ai)
         {
-            Console.WriteLine("Cloning.");
+            if (!ai.MasterEntity.HasEnoughEnergyToClone())
+            {
+                //look for food.
+                ai.MasterEntity.ForceLookForFood = true;
+                Console.WriteLine("Not enough energy for cloning! Look for food!");
+            }
+            else { 
+                if (ai.MasterEntity.CloneSelf())
+                {
+                    Console.WriteLine("Cloned!");
+                }
+            }
         }
     }
 
@@ -112,6 +142,15 @@ namespace AIpro_FSM.AI
 
     public class Mine : State
     {
+        public override void Start(AI ai)
+        {
+        }
+
+        public override void End(AI ai)
+        {
+            ai.MasterEntity.clearTargets();
+        }
+
         public override void Update(AI ai)
         {
             if (ai.MasterEntity.DigTarget == null)

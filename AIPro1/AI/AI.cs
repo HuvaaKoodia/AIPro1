@@ -86,7 +86,7 @@ namespace AIpro_FSM.AI
                         else 
                             remove= s.Priority >= state.Priority;
 
-                        if (remove) StateStack.Remove(s);
+                        if (remove) RemoveState(s);
                     }
                     if (!is_superstate) PushToStack(state);
                 }
@@ -96,9 +96,20 @@ namespace AIpro_FSM.AI
 
         private void PushToStack(State state)
         {
-            if (state.ChildState != null) StateStack.Add(state.ChildState);
+            if (state.ChildState != null) AddState(state.ChildState);
+            AddState(state);
+            if (state.ParentState != null) AddState(state.ParentState);
+        }
+
+        private void AddState(State state) {
+            state.Start(this);
             StateStack.Add(state);
-            if (state.ParentState != null) StateStack.Add(state.ParentState);
+        }
+
+        private void RemoveState(State state)
+        {
+            state.End(this);
+            StateStack.Remove(state);
         }
     }
 }
