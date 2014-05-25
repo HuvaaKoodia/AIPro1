@@ -15,27 +15,15 @@ namespace AIpro_FSM
 
             //map setup
             var map = new Map(30, 30);
-            map.GenerateMap(1111, 10, 10, 20);
+            map.DisableVictoryConditions = false;
 
-            var ai_team = new AI_team("Turbo",ConsoleColor.DarkRed,map);
-            ai_team.AddUnit(2, 2);
-
-            var temp_team = new AI_team("Dummy", ConsoleColor.Yellow, map);
-            temp_team.AddUnit(27, 27);
-
+            var ai_team = new AI_team("Turbo",1, ConsoleColor.DarkRed, map);
             map.Teams.Add(ai_team);
+
+            var temp_team = new AI_team("Dummy",2, ConsoleColor.Yellow, map);
             map.Teams.Add(temp_team);
 
-            Console.WriteLine("Program Start");
-
             map.GameLoop();
-
-            Console.WriteLine("Program over (e to exit)");
-            while (true)
-            {
-                var input = Console.ReadLine();
-                if (input.StartsWith("e")) break;
-            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace AIpro_FSM.AI
 
         int current_state_priority=0;
 
-        public AIEntity MasterEntity;
+        public AIEntity Master;
         public Map world;
 
         public AI(){
@@ -55,7 +55,8 @@ namespace AIpro_FSM.AI
             }
         }
         /// <summary>
-        /// Haxy hax of HaxHax
+        /// Haxy hax of HaxHax.
+        /// This is pretty terrible, hard to understand, unnecessary bloat.
         /// </summary>
         /// <param name="state"></param>
         public void SetState(State state)

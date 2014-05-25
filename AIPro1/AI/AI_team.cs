@@ -12,15 +12,22 @@ namespace AIpro_FSM.AI
 
         Map map;
 
-        public AI_team(string name,ConsoleColor color,Map map):base(name,1,color){
+        public AI_team(string name, int number, ConsoleColor color, Map map)
+            : base(name, number, color)
+        {
             Commander = new G_BB(map,this,1);
             this.map = map;
         }
 
-        public AIEntity AddUnit(int x,int y) {
+        public override void AddUnitToMap(int x, int y)
+        {
             var unit = new AIEntity(map, this);
             unit.SetPosition(x, y);
-            return unit;
+        }
+
+        public override void Update(Entity currentEntity)
+        {
+            Commander.Update(map);
         }
     }
 }
